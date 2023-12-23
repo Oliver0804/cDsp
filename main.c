@@ -50,9 +50,7 @@ int main() {
 
     const char* filename = "./demo.csv";  // CSV 文件名
     int maxDataSize = 100000;
-    int windowSize = 13; // 窗口大小
-    int startLine = 5;  // 开始的 targetLine
-    int endLine = 10;   // 结束的 targetLine
+    int windowSize = 3; // 窗口大小
 
     FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
     if (gnuplotPipe == NULL) {
@@ -60,9 +58,11 @@ int main() {
         return 1;
     }
 
-    fprintf(gnuplotPipe, "set multiplot layout 2,3 title 'Data Visualization from Line %d to %d'\n", startLine, endLine);
+    fprintf(gnuplotPipe, "set multiplot layout 2,3 title 'Six Axis Data Visualization'\n");
 
-    for (int targetLine = startLine; targetLine <= endLine; targetLine++) {
+    const char* labels[] = {"AX", "AY", "AZ", "GX", "GY", "GZ"};
+    for (int i = 0; i < 6; i++) {
+        int targetLine = 5 + i;  // 从第 5 行开始，对应 AX, AY, AZ, GX, GY, GZ
         double* inputData = malloc(sizeof(double) * maxDataSize);
         double* outputData = malloc(sizeof(double) * maxDataSize);
 
@@ -84,17 +84,17 @@ int main() {
 
         calculateMovingAverage(inputData, outputData, count, windowSize);
 
-        // 将 inputData 和 outputData 写入一个临时文件
+        // 将 inputData 和 outputData 写入临时文件
         char tempFileName[50];
-        sprintf(tempFileName, "tempData_%d.temp", targetLine);
+        sprintf(tempFileName, "tempData_%s.temp", labels[i]);
         FILE *tempFile = fopen(tempFileName, "w");
-        for (int i = 0; i < count; i++) {
-            fprintf(tempFile, "%d %f %f\n", i, inputData[i], outputData[i]);
+        for (int j = 0; j < count; j++) {
+            fprintf(tempFile, "%d %f %f\n", j, inputData[j], outputData[j]);
         }
         fclose(tempFile);
 
         // 使用 gnuplot 绘制 inputData 和 outputData
-        fprintf(gnuplotPipe, "set title 'Line %d'\n", targetLine);
+        fprintf(gnuplotPipe, "set title '%s Data'\n", labels[i]);
         fprintf(gnuplotPipe, "plot '%s' using 1:2 with lines title 'Input', ", tempFileName);
         fprintf(gnuplotPipe, "'%s' using 1:3 with lines title 'Output'\n", tempFileName);
 
