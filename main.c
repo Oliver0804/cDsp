@@ -44,11 +44,29 @@ int readCsvData(const char* filename, double* data, int maxDataSize, int targetC
     return index;  // 返回目标列的数据数量
 }
 
+void printUsage(char *programName) {
+    printf("Usage: %s <path_to_csv>\n", programName);
+    printf("Options:\n");
+    printf("  -h               Display this help message and exit\n");
+    printf("  <path_to_csv>    Path to the CSV file to be processed\n");
+}
 
-int main() {
+
+int main(int argc, char *argv[]) {
+    if (argc == 2 && strcmp(argv[1], "-h") == 0) {
+        printUsage(argv[0]);
+        return 0;
+    }
+
+    if (argc != 2) {
+        fprintf(stderr, "Error: Incorrect number of arguments.\n");
+        printUsage(argv[0]);
+        return 1;
+    }
+
     printHelloWorld();
 
-    const char* filename = "./demo.csv";  // CSV 文件名
+    const char* filename = argv[1];  // 从命令行参数获取 CSV 文件名
     int maxDataSize = 100000;
     int windowSize = 3; // 窗口大小
 
