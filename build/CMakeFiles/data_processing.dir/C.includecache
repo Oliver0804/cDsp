@@ -9,6 +9,8 @@
 /Users/oliver/code/c/dsp/data_processing.c
 stddef.h
 -
+math.h
+-
 data_processing.h
 /Users/oliver/code/c/dsp/data_processing.h
 
