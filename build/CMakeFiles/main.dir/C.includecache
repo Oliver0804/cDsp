@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/oliver/code/c/dsp/data_processing.h
+
+/Users/oliver/code/c/dsp/helloworld.h
+
+/Users/oliver/code/c/dsp/main.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+helloworld.h
+/Users/oliver/code/c/dsp/helloworld.h
+data_processing.h
+/Users/oliver/code/c/dsp/data_processing.h
+stdio.h
+-
+stdlib.h
+-
+

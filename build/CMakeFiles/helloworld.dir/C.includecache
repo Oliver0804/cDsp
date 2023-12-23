@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/oliver/code/c/dsp/helloworld.c
+helloworld.h
+/Users/oliver/code/c/dsp/helloworld.h
+stdio.h
+-
+
+/Users/oliver/code/c/dsp/helloworld.h
+
